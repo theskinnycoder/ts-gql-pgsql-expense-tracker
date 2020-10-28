@@ -29,9 +29,9 @@
 	},
 	"scripts": {
 		"watch:tsc": "tsc -w",
-		"client": "npm start --prefix client",
+		"client": "npm start --prefix ./../client",
 		"start": "cross-env NODE_ENV=production node dist/server.js",
 		"server": "cross-env NODE_ENV=development nodemon dist/server.js",
-		"dev": "concurrently \"yarn run server\" \"yarn run client\""
+		"dev": "concurrently \"npm run server\" \"npm run client\""
 	}
 }
