@@ -1,7 +1,7 @@
 query GetTransactions {
-	allTransactions {
-		id
-		text
-		amount
-	}
+  allTransactions {
+    id
+    text
+    amount
+  }
 }

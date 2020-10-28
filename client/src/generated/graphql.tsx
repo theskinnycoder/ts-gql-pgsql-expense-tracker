@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -29,12 +31,10 @@ export type Mutation = {
   deletedTransaction: Scalars['ID'];
 };
 
-
 export type MutationNewTransactionArgs = {
   amount: Scalars['Int'];
   text: Scalars['String'];
 };
-
 
 export type MutationDeletedTransactionArgs = {
   id: Scalars['ID'];
@@ -45,47 +45,43 @@ export type CreateTransactionMutationVariables = Exact<{
   amount: Scalars['Int'];
 }>;
 
-
-export type CreateTransactionMutation = (
-  { __typename?: 'Mutation' }
-  & { newTransaction: (
-    { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'text' | 'amount'>
-  ) }
-);
+export type CreateTransactionMutation = { __typename?: 'Mutation' } & {
+  newTransaction: { __typename?: 'Transaction' } & Pick<
+    Transaction,
+    'id' | 'text' | 'amount'
+  >;
+};
 
 export type DeleteTransactionMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type DeleteTransactionMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'deletedTransaction'
+>;
 
-export type DeleteTransactionMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deletedTransaction'>
-);
+export type GetTransactionsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetTransactionsQuery = (
-  { __typename?: 'Query' }
-  & { allTransactions: Array<(
-    { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'text' | 'amount'>
-  )> }
-);
-
+export type GetTransactionsQuery = { __typename?: 'Query' } & {
+  allTransactions: Array<
+    { __typename?: 'Transaction' } & Pick<Transaction, 'id' | 'text' | 'amount'>
+  >;
+};
 
 export const CreateTransactionDocument = gql`
-    mutation CreateTransaction($text: String!, $amount: Int!) {
-  newTransaction(text: $text, amount: $amount) {
-    id
-    text
-    amount
+  mutation CreateTransaction($text: String!, $amount: Int!) {
+    newTransaction(text: $text, amount: $amount) {
+      id
+      text
+      amount
+    }
   }
-}
-    `;
-export type CreateTransactionMutationFn = Apollo.MutationFunction<CreateTransactionMutation, CreateTransactionMutationVariables>;
+`;
+export type CreateTransactionMutationFn = Apollo.MutationFunction<
+  CreateTransactionMutation,
+  CreateTransactionMutationVariables
+>;
 
 /**
  * __useCreateTransactionMutation__
@@ -105,18 +101,36 @@ export type CreateTransactionMutationFn = Apollo.MutationFunction<CreateTransact
  *   },
  * });
  */
-export function useCreateTransactionMutation(baseOptions?: Apollo.MutationHookOptions<CreateTransactionMutation, CreateTransactionMutationVariables>) {
-        return Apollo.useMutation<CreateTransactionMutation, CreateTransactionMutationVariables>(CreateTransactionDocument, baseOptions);
-      }
-export type CreateTransactionMutationHookResult = ReturnType<typeof useCreateTransactionMutation>;
-export type CreateTransactionMutationResult = Apollo.MutationResult<CreateTransactionMutation>;
-export type CreateTransactionMutationOptions = Apollo.BaseMutationOptions<CreateTransactionMutation, CreateTransactionMutationVariables>;
-export const DeleteTransactionDocument = gql`
-    mutation DeleteTransaction($id: ID!) {
-  deletedTransaction(id: $id)
+export function useCreateTransactionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateTransactionMutation,
+    CreateTransactionMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    CreateTransactionMutation,
+    CreateTransactionMutationVariables
+  >(CreateTransactionDocument, baseOptions);
 }
-    `;
-export type DeleteTransactionMutationFn = Apollo.MutationFunction<DeleteTransactionMutation, DeleteTransactionMutationVariables>;
+export type CreateTransactionMutationHookResult = ReturnType<
+  typeof useCreateTransactionMutation
+>;
+export type CreateTransactionMutationResult = Apollo.MutationResult<
+  CreateTransactionMutation
+>;
+export type CreateTransactionMutationOptions = Apollo.BaseMutationOptions<
+  CreateTransactionMutation,
+  CreateTransactionMutationVariables
+>;
+export const DeleteTransactionDocument = gql`
+  mutation DeleteTransaction($id: ID!) {
+    deletedTransaction(id: $id)
+  }
+`;
+export type DeleteTransactionMutationFn = Apollo.MutationFunction<
+  DeleteTransactionMutation,
+  DeleteTransactionMutationVariables
+>;
 
 /**
  * __useDeleteTransactionMutation__
@@ -135,21 +149,36 @@ export type DeleteTransactionMutationFn = Apollo.MutationFunction<DeleteTransact
  *   },
  * });
  */
-export function useDeleteTransactionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTransactionMutation, DeleteTransactionMutationVariables>) {
-        return Apollo.useMutation<DeleteTransactionMutation, DeleteTransactionMutationVariables>(DeleteTransactionDocument, baseOptions);
-      }
-export type DeleteTransactionMutationHookResult = ReturnType<typeof useDeleteTransactionMutation>;
-export type DeleteTransactionMutationResult = Apollo.MutationResult<DeleteTransactionMutation>;
-export type DeleteTransactionMutationOptions = Apollo.BaseMutationOptions<DeleteTransactionMutation, DeleteTransactionMutationVariables>;
-export const GetTransactionsDocument = gql`
-    query GetTransactions {
-  allTransactions {
-    id
-    text
-    amount
-  }
+export function useDeleteTransactionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteTransactionMutation,
+    DeleteTransactionMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    DeleteTransactionMutation,
+    DeleteTransactionMutationVariables
+  >(DeleteTransactionDocument, baseOptions);
 }
-    `;
+export type DeleteTransactionMutationHookResult = ReturnType<
+  typeof useDeleteTransactionMutation
+>;
+export type DeleteTransactionMutationResult = Apollo.MutationResult<
+  DeleteTransactionMutation
+>;
+export type DeleteTransactionMutationOptions = Apollo.BaseMutationOptions<
+  DeleteTransactionMutation,
+  DeleteTransactionMutationVariables
+>;
+export const GetTransactionsDocument = gql`
+  query GetTransactions {
+    allTransactions {
+      id
+      text
+      amount
+    }
+  }
+`;
 
 /**
  * __useGetTransactionsQuery__
@@ -166,12 +195,35 @@ export const GetTransactionsDocument = gql`
  *   },
  * });
  */
-export function useGetTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<GetTransactionsQuery, GetTransactionsQueryVariables>) {
-        return Apollo.useQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(GetTransactionsDocument, baseOptions);
-      }
-export function useGetTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransactionsQuery, GetTransactionsQueryVariables>) {
-          return Apollo.useLazyQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(GetTransactionsDocument, baseOptions);
-        }
-export type GetTransactionsQueryHookResult = ReturnType<typeof useGetTransactionsQuery>;
-export type GetTransactionsLazyQueryHookResult = ReturnType<typeof useGetTransactionsLazyQuery>;
-export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery, GetTransactionsQueryVariables>;
+export function useGetTransactionsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >
+) {
+  return Apollo.useQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(
+    GetTransactionsDocument,
+    baseOptions
+  );
+}
+export function useGetTransactionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >(GetTransactionsDocument, baseOptions);
+}
+export type GetTransactionsQueryHookResult = ReturnType<
+  typeof useGetTransactionsQuery
+>;
+export type GetTransactionsLazyQueryHookResult = ReturnType<
+  typeof useGetTransactionsLazyQuery
+>;
+export type GetTransactionsQueryResult = Apollo.QueryResult<
+  GetTransactionsQuery,
+  GetTransactionsQueryVariables
+>;

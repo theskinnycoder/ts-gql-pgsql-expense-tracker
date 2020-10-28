@@ -1,7 +1,7 @@
 mutation CreateTransaction($text: String!, $amount: Int!) {
-	newTransaction(text: $text, amount: $amount) {
-		id
-		text
-		amount
-	}
+  newTransaction(text: $text, amount: $amount) {
+    id
+    text
+    amount
+  }
 }

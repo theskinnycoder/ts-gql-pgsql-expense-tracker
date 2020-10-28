@@ -17,45 +17,45 @@ const { PORT, NODE_ENV, TYPEORM_URL } = process.env;
 
 // Main Async Function to listen for requests only after connecting to the DB
 (async () => {
-	// Create the DB Connection
-	const conn = await createConnection({
-		type: 'postgres',
-		url: TYPEORM_URL,
-		logging: NODE_ENV === 'development',
-		synchronize: true,
-		entities: [Transaction],
-	});
+  // Create the DB Connection
+  const conn = await createConnection({
+    type: 'postgres',
+    url: TYPEORM_URL,
+    logging: NODE_ENV === 'development',
+    synchronize: true,
+    entities: [Transaction],
+  });
 
-	console.log(`Connected to the PostgreSQL Database ${conn.name}`);
+  console.log(`Connected to the PostgreSQL Database ${conn.name}`);
 
-	// Create an Express Web-App Instance
-	const app = Express();
+  // Create an Express Web-App Instance
+  const app = Express();
 
-	// Create an Apollo-Server Instance
-	const server = new ApolloServer({
-		schema: await buildSchema({
-			resolvers: [TransactionResolvers],
-		}),
-	});
+  // Create an Apollo-Server Instance
+  const server = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [TransactionResolvers],
+    }),
+  });
 
-	// Apply the Express Web-App as middleware to the Apollo-Server
-	server.applyMiddleware({ app });
+  // Apply the Express Web-App as middleware to the Apollo-Server
+  server.applyMiddleware({ app });
 
-	// Serve the React App's built SPA as the main route in production
-	if (NODE_ENV === 'production') {
-		const root = join(__dirname, '../..', 'client', 'build');
-		app.use(serveStatic(root));
-		app.get('*', (_: Request, res: Response) =>
-			res.sendFile('index.html', { root })
-		);
-	}
+  // Serve the React App's built SPA as the main route in production
+  if (NODE_ENV === 'production') {
+    const root = join(__dirname, '../..', 'client', 'build');
+    app.use(serveStatic(root));
+    app.get('*', (_: Request, res: Response) =>
+      res.sendFile('index.html', { root })
+    );
+  }
 
-	// Keep listening for requests
-	app.listen(PORT, () =>
-		console.log(
-			`Server up and running in ${NODE_ENV} mode and is listening for requests at http://localhost:${PORT}${
-				NODE_ENV === 'development' ? server.graphqlPath : ''
-			}`
-		)
-	);
+  // Keep listening for requests
+  app.listen(PORT, () =>
+    console.log(
+      `Server up and running in ${NODE_ENV} mode and is listening for requests at http://localhost:${PORT}${
+        NODE_ENV === 'development' ? server.graphqlPath : ''
+      }`
+    )
+  );
 })();
